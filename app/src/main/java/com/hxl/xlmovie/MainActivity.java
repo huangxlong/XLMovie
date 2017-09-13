@@ -33,8 +33,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.btn_request)
-    Button btnRequest;
     @Bind(R.id.recycler)
     RecyclerView recycler;
     @Bind(R.id.refresh)
@@ -82,15 +80,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.btn_request})
+    @OnClick({})
     public void OnClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_request:
 
-                request();
-
-
-                break;
         }
     }
 

@@ -7,11 +7,10 @@
     android:orientation="vertical"
     tools:context="com.hxl.xlmovie.MainActivity">
 
-    <Button
-        android:id="@+id/btn_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"></com.youth.banner.Banner>
 
 
     <android.support.v4.widget.SwipeRefreshLayout
