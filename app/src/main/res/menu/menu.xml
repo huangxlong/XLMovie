@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ic_about"
+        android:icon="@drawable/icon_list_about"
+        android:title="关于我们"/>
+
+    <item
+        android:id="@+id/ic_call"
+        android:icon="@drawable/icon_list_call"
+        android:title="联系我们"/>
+
+    <item
+        android:id="@+id/ic_faq"
+        android:icon="@drawable/icon_list_faq"
+        android:title="常见问题"/>
+
+    <item
+        android:id="@+id/ic_set"
+        android:icon="@drawable/icon_list_setting"
+        android:title="设置"/>
+
+    <item
+        android:id="@+id/ic_share"
+        android:icon="@drawable/icon_list_share"
+        android:title="分享"/>
+</menu>

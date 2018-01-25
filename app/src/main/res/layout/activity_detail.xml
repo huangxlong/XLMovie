@@ -1,66 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/aviLoading"
-        style="@style/AVLoadingIndicatorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        app:indicatorColor="#aae84e40"
-        app:indicatorName="BallPulseIndicator" />
+    <include layout="@layout/layout_title" />
 
     <LinearLayout
-        android:id="@+id/layout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/titleLayout"
+
+        <com.hxl.xlmovie.view.LoadingView
+            android:id="@+id/loadingView"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#212021"
-            android:visibility="visible">
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:gravity="center_vertical"
-                android:text="详情"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <RelativeLayout
-                android:id="@+id/layout_back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true">
-
-                <ImageView
-                    android:id="@+id/back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
-                    android:src="@drawable/nav_back" />
-            </RelativeLayout>
-        </RelativeLayout>
+            android:layout_height="match_parent" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,7 +57,7 @@
                         android:padding="16dp">
 
                         <TextView
-                            android:id="@+id/tv_title"
+                            android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1111"
@@ -164,10 +127,7 @@
 
                         <android.support.v7.widget.AppCompatRatingBar
                             android:id="@+id/ratingBar"
-                            style="@style/Widget.AppCompat.RatingBar.Small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:numStars="5"
+                            style="@style/RatingBar"
                             android:rating="4.5" />
 
                         <TextView
@@ -229,13 +189,14 @@
                     android:textColor="#cecfce" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:padding="16dp"
                     android:id="@+id/actor_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                    android:layout_height="match_parent"
+                    android:padding="16dp"></android.support.v7.widget.RecyclerView>
 
 
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

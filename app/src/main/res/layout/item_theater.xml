@@ -38,11 +38,8 @@
 
             <android.support.v7.widget.AppCompatRatingBar
                 android:id="@+id/ratingBar"
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/RatingBar"
                 android:layout_marginRight="8dp"
-                android:numStars="5"
                 android:rating="4.5" />
 
             <TextView

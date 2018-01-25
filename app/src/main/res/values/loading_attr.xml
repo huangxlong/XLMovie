@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="LoadingView">
+    <declare-styleable name="LoadingDialog">
         <attr name="loadingText" format="string|reference"/>
         <attr name="loadingTextAppearance" format="reference"/>
         <attr name="delay" format="integer|reference"/>
     </declare-styleable>
+
+
 
 </resources>
