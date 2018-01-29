@@ -3,7 +3,7 @@ package com.hxl.xlmovie.entity;
 /**
  * Created by Administrator on 2017/2/28.
  */
-public class Address {
+public class AddressBean {
 
     public static class LocationInfo {
         public double lat;

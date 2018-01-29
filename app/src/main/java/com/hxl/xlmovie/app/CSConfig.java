@@ -1,4 +1,4 @@
-package com.hxl.xlmovie.base;
+package com.hxl.xlmovie.app;
 
 import android.content.Context;
 import android.text.TextUtils;

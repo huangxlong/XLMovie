@@ -1,8 +1,8 @@
 package com.hxl.xlmovie.http;
 
-import com.hxl.xlmovie.entity.ActorRsp;
-import com.hxl.xlmovie.entity.Detail;
-import com.hxl.xlmovie.entity.Theater;
+import com.hxl.xlmovie.entity.ActorBean;
+import com.hxl.xlmovie.entity.DetailBean;
+import com.hxl.xlmovie.entity.TheaterBean;
 
 
 import retrofit2.http.GET;
@@ -18,23 +18,23 @@ public interface MovieService {
 
     //获取上映电影列表
     @GET("in_theaters")
-    Observable<Theater> getTheater(@Query("apikey") String apikey,
-                                   @Query("city") String city,
-                                   @Query("start") int start,
-                                   @Query("count") int count,
-                                   @Query("client") String client,
-                                   @Query("udid") String udid);
+    Observable<TheaterBean> getTheater(@Query("apikey") String apikey,
+                                       @Query("city") String city,
+                                       @Query("start") int start,
+                                       @Query("count") int count,
+                                       @Query("client") String client,
+                                       @Query("udid") String udid);
 
     //获取电影详情
     @GET("subject/{id}")
-    Observable<Detail> getDetail(@Path("id") String id,
-                                 @Query("apikey") String apikey,
-                                 @Query("city") String city,
-                                 @Query("client") String client,
-                                 @Query("udid") String udid);
+    Observable<DetailBean> getDetail(@Path("id") String id,
+                                     @Query("apikey") String apikey,
+                                     @Query("city") String city,
+                                     @Query("client") String client,
+                                     @Query("udid") String udid);
 
     //获取演员详情
     @GET("celebrity/{id}")
-    Observable<ActorRsp> getActor(@Path("id") String id);
+    Observable<ActorBean> getActor(@Path("id") String id);
 
 }

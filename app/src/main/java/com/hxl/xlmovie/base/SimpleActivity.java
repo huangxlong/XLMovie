@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.hxl.xlmovie.R;
+import com.hxl.xlmovie.app.App;
 import com.hxl.xlmovie.util.ToastUtil;
 import com.hxl.xlmovie.view.LoadingDialog;
 

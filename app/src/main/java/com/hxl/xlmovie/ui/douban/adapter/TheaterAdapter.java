@@ -1,16 +1,17 @@
-package com.hxl.xlmovie.ui.adapter;
+package com.hxl.xlmovie.ui.douban.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.hxl.xlmovie.R;
-import com.hxl.xlmovie.entity.Theater;
+import com.hxl.xlmovie.entity.TheaterBean;
 
 import java.util.List;
 
@@ -23,10 +24,10 @@ import butterknife.ButterKnife;
 
 public class TheaterAdapter extends RecyclerView.Adapter<TheaterAdapter.ViewHolder> {
     private Context mContext;
-    private List<Theater.SubjectsBean> mTheater;
+    private List<TheaterBean.SubjectsBean> mTheater;
     private OnItemClickListener mOnItemClickListener = null;
 
-    public TheaterAdapter(Context context, List<Theater.SubjectsBean> theater) {
+    public TheaterAdapter(Context context, List<TheaterBean.SubjectsBean> theater) {
         mContext = context;
         mTheater = theater;
     }
@@ -51,11 +52,11 @@ public class TheaterAdapter extends RecyclerView.Adapter<TheaterAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setTag(position);
 
-        Theater.SubjectsBean sub = mTheater.get(position);
-        holder.ivPoster.setImageURI(sub.images.large);
+        TheaterBean.SubjectsBean sub = mTheater.get(position);
+        Glide.with(mContext).load(sub.images.large).into(holder.ivPoster);
         holder.tvTitle.setText(sub.title);
-        if (sub.rating.average> 0) {
-            holder.tvGrade.setText(sub.rating.average+ "");
+        if (sub.rating.average > 0) {
+            holder.tvGrade.setText(sub.rating.average + "");
             holder.ratingBar.setRating(Float.parseFloat(sub.rating.stars) / 10);
             holder.ratingBar.setVisibility(View.VISIBLE);
         } else {
@@ -72,7 +73,7 @@ public class TheaterAdapter extends RecyclerView.Adapter<TheaterAdapter.ViewHold
                 if (i == sub.casts.size() - 1) {
                     actor = actor + sub.casts.get(i).name;
                 } else {
-                    actor = actor + sub.casts.get(i).name+ " / ";
+                    actor = actor + sub.casts.get(i).name + " / ";
                 }
 
             }
@@ -92,7 +93,7 @@ public class TheaterAdapter extends RecyclerView.Adapter<TheaterAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_poster)
-        SimpleDraweeView ivPoster;
+        ImageView ivPoster;
         @BindView(R.id.tv_title)
         TextView tvTitle;
         @BindView(R.id.tv_grade)

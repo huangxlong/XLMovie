@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/6 0006.
  */
 
-public class Detail implements Serializable {
+public class DetailBean implements Serializable {
     public RatingBean rating;
     public int reviews_count;
     public int wish_count;

@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/7 0007.
  */
 
-public class ActorRsp {
+public class ActorBean {
 
     /**
      * mobile_url : https://movie.douban.com/celebrity/1000525/mobile

@@ -1,6 +1,6 @@
 package com.hxl.xlmovie.constant;
 
-import com.hxl.xlmovie.base.App;
+import com.hxl.xlmovie.app.App;
 
 
 public class AppConstant {

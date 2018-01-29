@@ -1,7 +1,6 @@
-package com.hxl.xlmovie.ui.activity;
+package com.hxl.xlmovie.ui.douban.activity;
 
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,11 +9,10 @@ import android.widget.TextView;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.hxl.xlmovie.R;
-import com.hxl.xlmovie.base.App;
+import com.hxl.xlmovie.app.App;
 import com.hxl.xlmovie.base.SimpleActivity;
-import com.hxl.xlmovie.entity.Address;
-import com.hxl.xlmovie.mvp.mFragment;
-import com.hxl.xlmovie.ui.fragment.MovieFragment;
+import com.hxl.xlmovie.entity.AddressBean;
+import com.hxl.xlmovie.ui.douban.fragment.MovieFragment;
 import com.hxl.xlmovie.util.SPUtil;
 
 import java.util.ArrayList;
@@ -78,7 +76,7 @@ public class MainTabActivity extends SimpleActivity {
         //定位
         App.getApplication().startLocation(MainTabActivity.this, new App.LocationListener() {
                     @Override
-                    public void onLocationResult(Address.LocationInfo location) {
+                    public void onLocationResult(AddressBean.LocationInfo location) {
                         SPUtil.put(MainTabActivity.this, "city", location.city);
                         tvCity.setText(location.city);
                         switchContent(null, mFragments.get(0));
@@ -89,7 +87,7 @@ public class MainTabActivity extends SimpleActivity {
 
     private void initFragments() {
         mFragments.add(MovieFragment.newInstance());
-        mFragments.add(mFragment.newInstance());
+        mFragments.add(MovieFragment.newInstance());
     }
 
 
@@ -135,7 +133,7 @@ public class MainTabActivity extends SimpleActivity {
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     App.getApplication().startLocation(MainTabActivity.this, new App.LocationListener() {
                         @Override
-                        public void onLocationResult(Address.LocationInfo location) {
+                        public void onLocationResult(AddressBean.LocationInfo location) {
                             SPUtil.put(MainTabActivity.this, "city", location.city);
 
                             switchContent(null, mFragments.get(0));

@@ -1,10 +1,9 @@
 package com.hxl.xlmovie.http;
 
-import com.hxl.xlmovie.base.App;
+import com.hxl.xlmovie.app.App;
 import com.hxl.xlmovie.util.NetUtil;
 
 import java.net.ConnectException;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import rx.Subscriber;

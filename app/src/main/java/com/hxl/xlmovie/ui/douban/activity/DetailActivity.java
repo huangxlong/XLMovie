@@ -1,4 +1,4 @@
-package com.hxl.xlmovie.ui.activity;
+package com.hxl.xlmovie.ui.douban.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -12,32 +12,33 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.hxl.xlmovie.R;
-import com.hxl.xlmovie.base.SimpleActivity;
+import com.hxl.xlmovie.base.BaseActivity;
+import com.hxl.xlmovie.base.contract.douban.MovieDetailContratct;
+import com.hxl.xlmovie.entity.DetailBean;
 import com.hxl.xlmovie.http.BaseSubscriber;
-import com.hxl.xlmovie.ui.adapter.ActorAdapter;
-import com.hxl.xlmovie.entity.ActorRsp;
-import com.hxl.xlmovie.entity.Detail;
-import com.hxl.xlmovie.entity.Theater;
+import com.hxl.xlmovie.presenter.douban.MovieDetailPresenter;
+import com.hxl.xlmovie.ui.douban.adapter.ActorAdapter;
+import com.hxl.xlmovie.entity.ActorBean;
+import com.hxl.xlmovie.entity.TheaterBean;
 import com.hxl.xlmovie.http.RetrofitFactory;
 import com.hxl.xlmovie.util.SPUtil;
 import com.hxl.xlmovie.view.LoadingView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailActivity extends SimpleActivity {
+public class DetailActivity extends BaseActivity<MovieDetailPresenter> implements MovieDetailContratct.View {
 
     //    @Bind(R.id.aviLoading)
 //    AVLoadingIndicatorView aviLoading;
 //    @Bind(R.id.layout_main)
 //    LinearLayout layoutMain;
     @BindView(R.id.iv_detail)
-    SimpleDraweeView ivDetail;
+    ImageView ivDetail;
     @BindView(R.id.tv_name)
     TextView tvTitle;
     @BindView(R.id.tv_tag)
@@ -69,8 +70,9 @@ public class DetailActivity extends SimpleActivity {
     @BindView(R.id.loadingView)
     LoadingView loadingView;
 
-    private Theater.SubjectsBean subjects;
-    private Detail details;
+    private TheaterBean.SubjectsBean subjects;
+    private DetailBean details;
+    private String city;
 
 
     @Override
@@ -84,8 +86,8 @@ public class DetailActivity extends SimpleActivity {
         layoutCity.setVisibility(View.GONE);
         title.setText("详情");
 
-//        details = (Detail) getIntent().getExtras().getSerializable("detail");
-        subjects = (Theater.SubjectsBean) getIntent().getExtras().getSerializable("subject");
+        city = (String) SPUtil.get(DetailActivity.this, "city", "");
+        subjects = (TheaterBean.SubjectsBean) getIntent().getExtras().getSerializable("subject");
         getDetail();
 
         loadingView.setRefreshListener(new View.OnClickListener() {
@@ -106,34 +108,15 @@ public class DetailActivity extends SimpleActivity {
      * 获取电影详情跳转
      */
     private void getDetail() {
-        String city = (String) SPUtil.get(DetailActivity.this, "city", "");
         loadingView.setStatus(LoadingView.STATUS_LOADING);
-        RetrofitFactory.getMovieService()
-                .getDetail(subjects.id, "0b2bdeda43b5688921839c8ecb20399b", city, "", "")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<Detail>() {
-                    @Override
-                    public void onSuccess(Detail detail) {
-                        if (detail == null) {
-                            loadingView.setStatus(LoadingView.STATUS_EMPTY);
-                        }
-                        loadingView.setStatus(LoadingView.STATUS_DONE);
-                        details = detail;
-                        setData();
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
-                        loadingView.setStatus(LoadingView.STATUS_ERROR);
-                        showToast(msg);
-                    }
-                });
-
+        mPresenter.getDetail();
     }
 
     private void setData() {
-        ivDetail.setImageURI(details.images.large);
+        Glide.with(this)
+                .load(details.images.large)
+                .fitCenter()
+                .into(ivDetail);
         tvTitle.setText(subjects.title);
         String genres = "";
         for (int i = 0; i < subjects.genres.size(); i++) {
@@ -160,8 +143,6 @@ public class DetailActivity extends SimpleActivity {
             public void onItemClick(View view, int position) {
                 getActor(position);
             }
-
-
         });
 
     }
@@ -183,9 +164,9 @@ public class DetailActivity extends SimpleActivity {
                 .getActor(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<ActorRsp>() {
+                .subscribe(new BaseSubscriber<ActorBean>() {
                     @Override
-                    public void onSuccess(ActorRsp actorRsp) {
+                    public void onSuccess(ActorBean actorRsp) {
                         hideLoadingDialog();
                         Intent intent = new Intent(DetailActivity.this, ActorActivity.class);
                         Bundle bundle = new Bundle();
@@ -202,7 +183,7 @@ public class DetailActivity extends SimpleActivity {
                 });
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_sold})
+    @OnClick({R.id.iv_back, R.id.tv_sold, R.id.layout_photo})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
@@ -227,6 +208,72 @@ public class DetailActivity extends SimpleActivity {
                     tvSummary.setEllipsize(null);
                 }
                 break;
+
+            case R.id.layout_photo:
+                if (details.photos.size() != 0) {
+                    Intent intent = new Intent(DetailActivity.this, PhotosActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("urls", details);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                break;
         }
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public MovieDetailPresenter initPresenter() {
+        return new MovieDetailPresenter(this);
+    }
+
+    @Override
+    public String getId() {
+        return subjects.id;
+    }
+
+    @Override
+    public String getApiKey() {
+        return "0b2bdeda43b5688921839c8ecb20399b";
+    }
+
+    @Override
+    public String getCity() {
+        return city;
+    }
+
+    @Override
+    public String getClient() {
+        return "";
+    }
+
+    @Override
+    public String getUdid() {
+        return "";
+    }
+
+    @Override
+    public void handleSuccess(DetailBean detail) {
+        if (detail == null) {
+            loadingView.setStatus(LoadingView.STATUS_EMPTY);
+        }
+        loadingView.setStatus(LoadingView.STATUS_DONE);
+        details = detail;
+        setData();
+    }
+
+    @Override
+    public void handleFailure(String msg) {
+        loadingView.setStatus(LoadingView.STATUS_ERROR);
+        showToast(msg);
     }
 }

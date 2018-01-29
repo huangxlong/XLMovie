@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <com.hxl.xlmovie.view.LoadingView
-            android:id="@+id/loadingView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -31,17 +22,17 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/layout_photo"
                     android:layout_width="match_parent"
                     android:layout_height="270dp"
                     android:background="#212021"
                     android:paddingTop="8dp">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/iv_detail"
                         android:layout_width="144dp"
                         android:layout_height="233dp"
-                        android:layout_centerInParent="true"
-                        fresco:actualImageScaleType="fitCenter" />
+                        android:layout_centerInParent="true"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -198,5 +189,11 @@
             </LinearLayout>
         </ScrollView>
 
-    </LinearLayout>
+        <com.hxl.xlmovie.view.LoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </RelativeLayout>
 </LinearLayout>

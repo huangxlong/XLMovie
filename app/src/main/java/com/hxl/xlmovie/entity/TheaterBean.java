@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/4 0004.
  */
 
-public class Theater implements Serializable {
+public class TheaterBean implements Serializable {
 
     /**
      * count : 2

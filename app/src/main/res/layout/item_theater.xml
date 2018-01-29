@@ -6,13 +6,11 @@
     android:padding="15dp">
 
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_poster"
         android:layout_width="100dp"
         android:layout_height="150dp"
-        android:layout_gravity="center_vertical"
-        fresco:actualImageScaleType="fitCenter"
-        fresco:fadeDuration="500" />
+        android:layout_gravity="center_vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"

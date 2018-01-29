@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hxl.xlmovie.ui.activity.ActorActivity">
+    tools:context=".ui.douban.activity.ActorActivity">
 
     <LinearLayout
         android:id="@+id/layout_main"

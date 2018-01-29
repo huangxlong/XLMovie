@@ -1,4 +1,4 @@
-package com.hxl.xlmovie.base;
+package com.hxl.xlmovie.app;
 
 import android.Manifest;
 import android.app.Activity;
@@ -8,9 +8,9 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hxl.xlmovie.BuildConfig;
-import com.hxl.xlmovie.entity.Address;
+import com.hxl.xlmovie.base.SimpleActivity;
+import com.hxl.xlmovie.entity.AddressBean;
 import com.hxl.xlmovie.util.LogUtils;
 import com.hxl.xlmovie.util.PermissionUtil;
 
@@ -34,7 +34,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fresco.initialize(this);
         sApp = this;
         initLocation();
     }
@@ -101,7 +100,7 @@ public class App extends Application {
                 }
                 return;
             }
-            Address.LocationInfo locationInfo = new Address.LocationInfo();
+            AddressBean.LocationInfo locationInfo = new AddressBean.LocationInfo();
             locationInfo.city = location.getCity();
             locationInfo.desc = location.getAddrStr();
             locationInfo.lat = location.getLatitude();
@@ -152,7 +151,7 @@ public class App extends Application {
     }
 
     public interface LocationListener {
-        void onLocationResult(Address.LocationInfo location);
+        void onLocationResult(AddressBean.LocationInfo location);
     }
 
 }

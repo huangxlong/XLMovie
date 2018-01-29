@@ -1,16 +1,17 @@
-package com.hxl.xlmovie.ui.adapter;
+package com.hxl.xlmovie.ui.douban.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.hxl.xlmovie.R;
-import com.hxl.xlmovie.entity.Detail;
-import com.hxl.xlmovie.entity.Theater;
+import com.hxl.xlmovie.entity.DetailBean;
+import com.hxl.xlmovie.entity.TheaterBean;
 
 import java.util.List;
 
@@ -25,11 +26,11 @@ public class ActorAdapter extends RecyclerView.Adapter<ActorAdapter.ViewHolder> 
 
 
     private Context mContext;
-    private List<Theater.SubjectsBean.DirectorsBean> mDirectors;
-    private List<Detail.CastsBean> mCasts;
+    private List<TheaterBean.SubjectsBean.DirectorsBean> mDirectors;
+    private List<DetailBean.CastsBean> mCasts;
     private OnItemClickListener mOnItemClickListener = null;
 
-    public ActorAdapter(Context context, List<Theater.SubjectsBean.DirectorsBean> directors, List<Detail.CastsBean> casts) {
+    public ActorAdapter(Context context, List<TheaterBean.SubjectsBean.DirectorsBean> directors, List<DetailBean.CastsBean> casts) {
         mContext = context;
         mDirectors = directors;
         mCasts = casts;
@@ -54,16 +55,17 @@ public class ActorAdapter extends RecyclerView.Adapter<ActorAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setTag(position);
+        String imgUrl;
         if (position == 0) {
-            holder.ivActor.setImageURI(mDirectors.get(position).avatars.medium);
+            imgUrl = mDirectors.get(position).avatars.medium;
             holder.tvName.setText("导演");
             holder.tvActor.setText(mDirectors.get(position).name);
         } else {
-            holder.ivActor.setImageURI(mCasts.get(position - 1).avatars.medium);
+            imgUrl = mCasts.get(position - 1).avatars.medium;
             holder.tvName.setText(mCasts.get(position - 1).name);
             holder.tvActor.setText("");
         }
-
+        Glide.with(mContext).load(imgUrl).into(holder.ivActor);
 
     }
 
@@ -74,7 +76,7 @@ public class ActorAdapter extends RecyclerView.Adapter<ActorAdapter.ViewHolder> 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_actor)
-        SimpleDraweeView ivActor;
+        ImageView ivActor;
         @BindView(R.id.tv_name)
         TextView tvName;
         @BindView(R.id.tv_actor)

@@ -1,7 +1,6 @@
-package com.hxl.xlmovie.ui.activity;
+package com.hxl.xlmovie.ui.douban.activity;
 
 import android.net.http.SslError;
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -14,7 +13,6 @@ import com.hxl.xlmovie.R;
 import com.hxl.xlmovie.view.ProgressWebView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ActorActivity extends SimpleActivity {

@@ -1,4 +1,4 @@
-package com.hxl.xlmovie.mvp;
+package com.hxl.xlmovie.ui.douban.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import android.view.View;
 
 import com.hxl.xlmovie.R;
 import com.hxl.xlmovie.base.BaseFragment;
-import com.hxl.xlmovie.base.BasePresenter;
-import com.hxl.xlmovie.base.contract.MovieContract;
-import com.hxl.xlmovie.entity.Theater;
-import com.hxl.xlmovie.ui.activity.DetailActivity;
-import com.hxl.xlmovie.ui.adapter.TheaterAdapter;
+import com.hxl.xlmovie.base.contract.douban.MovieListContract;
+import com.hxl.xlmovie.entity.TheaterBean;
+import com.hxl.xlmovie.presenter.douban.MovieListPresenter;
+import com.hxl.xlmovie.ui.douban.activity.DetailActivity;
+import com.hxl.xlmovie.ui.douban.adapter.TheaterAdapter;
 import com.hxl.xlmovie.view.RecyclerViewDivider;
 
 import java.util.ArrayList;
@@ -27,31 +27,23 @@ import butterknife.BindView;
  * Created by Administrator on 2018/1/24 0024.
  */
 
-public class mFragment extends BaseFragment<MovieContract.View, MoviePresenter> implements MovieContract.View {
-    private View rootView;
+public class MovieFragment extends BaseFragment<MovieListPresenter> implements MovieListContract.View {
     @BindView(R.id.recycler)
     RecyclerView recycler;
     @BindView(R.id.refresh)
     SwipeRefreshLayout refreshLayout;
-    private Theater theaters;
+    private TheaterBean theaters;
     private TheaterAdapter theaterAdapter;
-    private List<Theater.SubjectsBean> subList = new ArrayList();
+    private List<TheaterBean.SubjectsBean> subList = new ArrayList();
 
-    public static mFragment newInstance() {
-        return new mFragment();
+    public static MovieFragment newInstance() {
+        return new MovieFragment();
     }
-
-//    @Override
-//    protected void initInject() {
-//
-//    }
-
 
     @Override
     public int getLayoutId() {
         return R.layout.fragment_movie;
     }
-
 
     @Override
     public void initEventAndData() {
@@ -63,8 +55,7 @@ public class mFragment extends BaseFragment<MovieContract.View, MoviePresenter> 
             }
         });
         theaterAdapter = new TheaterAdapter(mContext, subList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        recycler.setLayoutManager(linearLayoutManager);
+        recycler.setLayoutManager(new LinearLayoutManager(mContext));
         recycler.addItemDecoration(new RecyclerViewDivider(mContext, LinearLayoutManager.HORIZONTAL, 1, ContextCompat.getColor(mContext, R.color.lineColor)));
         recycler.setAdapter(theaterAdapter);
 
@@ -73,22 +64,19 @@ public class mFragment extends BaseFragment<MovieContract.View, MoviePresenter> 
         theaterAdapter.setOnItemClickListener(new TheaterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Theater.SubjectsBean subjectsBean = theaters.subjects.get(position);
+                TheaterBean.SubjectsBean subjectsBean = theaters.subjects.get(position);
                 Intent intent = new Intent(mContext, DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("subject", subjectsBean);
                 intent.putExtras(bundle);
                 startActivity(intent);
-//                getDetail(subjectsBean);
             }
         });
-
         mPresenter.getMovie();
     }
 
-
     @Override
-    public void handleSuccess(Theater theater) {
+    public void handleSuccess(TheaterBean theater) {
         refreshLayout.setRefreshing(false);
         theaters = theater;
         subList.clear();
@@ -144,8 +132,9 @@ public class mFragment extends BaseFragment<MovieContract.View, MoviePresenter> 
 
     }
 
+
     @Override
-    public MoviePresenter initPresenter() {
-        return new MoviePresenter(this);
+    public MovieListPresenter initPresenter() {
+        return new MovieListPresenter(this);
     }
 }
