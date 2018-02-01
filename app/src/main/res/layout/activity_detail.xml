@@ -32,7 +32,7 @@
                         android:id="@+id/iv_detail"
                         android:layout_width="144dp"
                         android:layout_height="233dp"
-                        android:layout_centerInParent="true"/>
+                        android:layout_centerInParent="true" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -183,7 +183,26 @@
                     android:id="@+id/actor_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="16dp"></android.support.v7.widget.RecyclerView>
+                    android:padding="12dp"></android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:text="预告片/剧照"
+                    android:textColor="#cecfce" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/resource_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="8dp"></android.support.v7.widget.RecyclerView>
 
 
             </LinearLayout>

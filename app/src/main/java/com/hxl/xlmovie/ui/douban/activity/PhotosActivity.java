@@ -20,38 +20,55 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 
 /**
  * Created by Administrator on 2018/1/25 0025.
  */
 
-public class PhotosActivity extends AppCompatActivity {
+public class PhotosActivity extends SimpleActivity {
 
     private DetailBean detail;
     private List<String> urlList = new ArrayList<>();
+    @BindView(R.id.viewPager)
     MyViewPager viewPager;
-
+    @BindView(R.id.tv_title)
     TextView tvTitle;
+    private int index;
+
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        viewPager = (MyViewPager) findViewById(R.id.viewPager);
+//        tvTitle = (TextView) findViewById(R.id.tv_title);
+//        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+////        initView();
+//    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photos);
-        viewPager = (MyViewPager) findViewById(R.id.viewPager);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        initView();
+    protected int getLayout() {
+        return R.layout.activity_photos;
     }
 
-
+    @Override
     protected void initView() {
+        setWindowStatusBarColor(this, R.color.detailColor);
+
         detail = (DetailBean) getIntent().getExtras().getSerializable("urls");
-        urlList.add(detail.images.large);
+        index = getIntent().getExtras().getInt("position");
+        tvTitle.setText("查看图片(" + (index + 1) + "/" + urlList.size() + ")");
+        boolean tag = getIntent().getExtras().getBoolean("tag");
+        if (tag) {
+            urlList.add(detail.images.large);
+        }
         for (DetailBean.PhotosBean url : detail.photos) {
             urlList.add(url.image);
         }
@@ -73,6 +90,19 @@ public class PhotosActivity extends AppCompatActivity {
 
             }
         });
+
+        viewPager.setCurrentItem(index);
+    }
+
+    @OnClick({R.id.iv_back})
+    void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back:
+
+                onBackPressed();
+
+                break;
+        }
     }
 
 

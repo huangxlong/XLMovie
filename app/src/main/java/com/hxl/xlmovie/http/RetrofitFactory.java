@@ -35,11 +35,10 @@ public class RetrofitFactory {
                     Log.d(TAG, message);
                 }
             });
-            if (BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG)
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            } else {
-                httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-            }
+            else httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+
             okHttpClient = new OkHttpClient.Builder()
                     .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                     .addInterceptor(httpLoggingInterceptor)

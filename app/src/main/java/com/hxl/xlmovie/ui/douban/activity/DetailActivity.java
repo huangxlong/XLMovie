@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hxl.xlmovie.R;
 import com.hxl.xlmovie.base.BaseActivity;
 import com.hxl.xlmovie.base.contract.douban.MovieDetailContratct;
@@ -23,6 +24,7 @@ import com.hxl.xlmovie.ui.douban.adapter.ActorAdapter;
 import com.hxl.xlmovie.entity.ActorBean;
 import com.hxl.xlmovie.entity.TheaterBean;
 import com.hxl.xlmovie.http.RetrofitFactory;
+import com.hxl.xlmovie.ui.douban.adapter.ResourceAdapter;
 import com.hxl.xlmovie.util.SPUtil;
 import com.hxl.xlmovie.view.LoadingView;
 
@@ -69,6 +71,8 @@ public class DetailActivity extends BaseActivity<MovieDetailPresenter> implement
     LinearLayout layoutCity;
     @BindView(R.id.loadingView)
     LoadingView loadingView;
+    @BindView(R.id.resource_recycler)
+    RecyclerView resourceRecycler;
 
     private TheaterBean.SubjectsBean subjects;
     private DetailBean details;
@@ -97,9 +101,12 @@ public class DetailActivity extends BaseActivity<MovieDetailPresenter> implement
             }
         });
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        actorRecycler.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager actorLayoutManager = new LinearLayoutManager(this);
+        actorLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        LinearLayoutManager resourceLayoutManager = new LinearLayoutManager(this);
+        resourceLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        actorRecycler.setLayoutManager(actorLayoutManager);
+        resourceRecycler.setLayoutManager(resourceLayoutManager);
 
 
     }
@@ -138,6 +145,11 @@ public class DetailActivity extends BaseActivity<MovieDetailPresenter> implement
         ActorAdapter actorAdapter = new ActorAdapter(this, subjects.directors, details.casts);
         actorRecycler.setAdapter(actorAdapter);
 
+        ResourceAdapter resourceAdapter = new ResourceAdapter(R.layout.item_resource, details.photos);
+        resourceRecycler.setAdapter(resourceAdapter);
+
+//        resourceAdapter.addHeaderView()
+
         actorAdapter.setOnItemClickListener(new ActorAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -145,6 +157,19 @@ public class DetailActivity extends BaseActivity<MovieDetailPresenter> implement
             }
         });
 
+
+        resourceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(DetailActivity.this, PhotosActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("urls", details);
+                bundle.putInt("position", position);
+                bundle.putBoolean("tag", false);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -214,6 +239,8 @@ public class DetailActivity extends BaseActivity<MovieDetailPresenter> implement
                     Intent intent = new Intent(DetailActivity.this, PhotosActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("urls", details);
+                    bundle.putInt("position", 0);
+                    bundle.putBoolean("tag", true);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
