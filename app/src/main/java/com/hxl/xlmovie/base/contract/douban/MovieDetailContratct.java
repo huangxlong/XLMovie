@@ -13,13 +13,9 @@ public interface MovieDetailContratct {
     interface View extends IBaseView {
         String getId();
 
-        String getApiKey();
 
         String getCity();
 
-        String getClient();
-
-        String getUdid();
 
         void handleSuccess(DetailBean detail);
 

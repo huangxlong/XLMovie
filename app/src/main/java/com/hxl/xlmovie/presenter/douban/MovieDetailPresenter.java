@@ -26,7 +26,7 @@ public class MovieDetailPresenter extends RxPresenter<MovieDetailContratct.View>
     @Override
     public void getDetail() {
         RetrofitFactory.getMovieService()
-                .getDetail(mView.getId(), mView.getApiKey(), mView.getCity(), mView.getClient(), mView.getUdid())
+                .getDetail(mView.getId(), mView.getCity())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<DetailBean>() {

@@ -5,10 +5,16 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hxl.xlmovie.BuildConfig;
+import com.hxl.xlmovie.app.CSConfig;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -39,9 +45,25 @@ public class RetrofitFactory {
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             else httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
 
+            //添加统一请求
+            Interceptor tokenInterceptor = new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    HttpUrl url = chain.request().url().newBuilder()
+                            .addQueryParameter(CSConfig.APIKEY, "0b2bdeda43b5688921839c8ecb20399b")
+                            .addQueryParameter(CSConfig.CLIENT, "")
+                            .addQueryParameter(CSConfig.UDID, "")
+                            .build();
+                    Request build = chain.request().newBuilder().url(url).build();
+                    return chain.proceed(build);
+                }
+            };
+
+
             okHttpClient = new OkHttpClient.Builder()
                     .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                     .addInterceptor(httpLoggingInterceptor)
+                    .addInterceptor(tokenInterceptor)
                     .build();
         }
         return okHttpClient;

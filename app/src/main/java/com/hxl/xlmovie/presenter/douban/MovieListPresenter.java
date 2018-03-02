@@ -24,18 +24,20 @@ public class MovieListPresenter extends RxPresenter<MovieListContract.View> impl
     @Override
     public void getMovie() {
         RetrofitFactory.getMovieService()
-                .getTheater(movieView.getApikey(), movieView.getCity(), movieView.getStar(), movieView.getCount(), movieView.getClient(), movieView.getUdid())
+                .getTheater( movieView.getCity(), movieView.getStar(), movieView.getCount())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<TheaterBean>() {
                     @Override
                     public void onSuccess(TheaterBean theater) {
                         mView.handleSuccess(theater);
+                        mView.hideLoading();
                     }
 
                     @Override
                     public void onFailure(String msg) {
                         mView.handleFailure(msg);
+                        mView.hideLoading();
                     }
                 });
     }

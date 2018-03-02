@@ -269,24 +269,11 @@ public class DetailActivity extends BaseActivity<MovieDetailPresenter> implement
     }
 
     @Override
-    public String getApiKey() {
-        return "0b2bdeda43b5688921839c8ecb20399b";
-    }
-
-    @Override
     public String getCity() {
         return city;
     }
 
-    @Override
-    public String getClient() {
-        return "";
-    }
 
-    @Override
-    public String getUdid() {
-        return "";
-    }
 
     @Override
     public void handleSuccess(DetailBean detail) {

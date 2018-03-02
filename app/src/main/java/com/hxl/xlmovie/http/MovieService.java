@@ -18,20 +18,14 @@ public interface MovieService {
 
     //获取上映电影列表
     @GET("in_theaters")
-    Observable<TheaterBean> getTheater(@Query("apikey") String apikey,
-                                       @Query("city") String city,
+    Observable<TheaterBean> getTheater(@Query("city") String city,
                                        @Query("start") int start,
-                                       @Query("count") int count,
-                                       @Query("client") String client,
-                                       @Query("udid") String udid);
+                                       @Query("count") int count);
 
     //获取电影详情
     @GET("subject/{id}")
     Observable<DetailBean> getDetail(@Path("id") String id,
-                                     @Query("apikey") String apikey,
-                                     @Query("city") String city,
-                                     @Query("client") String client,
-                                     @Query("udid") String udid);
+                                     @Query("city") String city);
 
     //获取演员详情
     @GET("celebrity/{id}")

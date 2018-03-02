@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/XLMovie.iml" filepath="$PROJECT_DIR$/XLMovie.iml" />
+      <module fileurl="file://D:\MyAndroidProject\XLMovie\XLMovie.iml" filepath="D:\MyAndroidProject\XLMovie\XLMovie.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\MyAndroidProject\XLMovie\app\app.iml" filepath="D:\MyAndroidProject\XLMovie\app\app.iml" />
     </modules>
   </component>
 </project>

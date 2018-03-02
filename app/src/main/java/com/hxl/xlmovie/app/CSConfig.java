@@ -16,6 +16,10 @@ public class CSConfig {
     public static final String UIN_KEY = "uin";
     public static final String SESSION_KEY = "session";
 
+    public static final String APIKEY="apikey";
+    public static final String CLIENT="client";
+    public static final String UDID="udid";
+
     private static CSConfig config;
     private String mIP;
     private int mPort;

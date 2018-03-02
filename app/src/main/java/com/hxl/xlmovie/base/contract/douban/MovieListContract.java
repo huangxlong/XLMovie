@@ -17,7 +17,6 @@ public interface MovieListContract {
         void handleFailure(String msg);
 
 
-        String getApikey();
 
         String getCity();
 
@@ -25,9 +24,6 @@ public interface MovieListContract {
 
         int getStar();
 
-        String getUdid();
-
-        String getClient();
     }
 
     interface Presenter extends BasePresenter<View> {
